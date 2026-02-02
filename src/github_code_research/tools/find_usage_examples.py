@@ -246,7 +246,7 @@ async def find_usage_examples_tool(
     for i, example in enumerate(result.get('examples', []), 1):
         output.append(f"## Example {i}: {example['repo']}\n")
         output.append(f"**Usage Score: {example.get('usage_score', 0):.0f}/100**\n")
-        output.append(f"File: {example['file']}\n")
+        output.append(f"File: {example['path']}\n")
         output.append(f"URL: {example['url']}\n")
         output.append(f"Stars: {example.get('stars', 0)}\n\n")
 
