@@ -270,7 +270,7 @@ async def validate_code_snippet_tool(
     cache,
     secret_scanner,
     cache_ttl: int
-) -> List[Dict[str, Any]]:
+) -> Dict:
     """
     MCP tool: Validate code snippet
 
@@ -286,10 +286,13 @@ async def validate_code_snippet_tool(
     check_secrets = arguments.get("check_secrets", True)
 
     if not code:
-        return [{
-            "type": "text",
-            "text": "Error: Please provide code to validate"
-        }]
+        return {
+            "content": [{
+                "type": "text",
+                "text": "Error: Please provide code to validate"
+            }],
+            "isError": True
+        }
 
     validator = CodeValidator(github_client, secret_scanner)
     result = validator.validate(code, language, target_version, check_secrets)
@@ -348,4 +351,9 @@ async def validate_code_snippet_tool(
     if not issues and not warnings:
         output.append("\n✅ **No issues found! Code looks good.**\n")
 
-    return [{"type": "text", "text": "".join(output)}]
+    return {
+        "content": [{
+            "type": "text",
+            "text": "".join(output)
+        }]
+    }

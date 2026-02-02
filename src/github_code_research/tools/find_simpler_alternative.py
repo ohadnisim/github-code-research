@@ -20,7 +20,7 @@ class SimplerAlternativeFinder:
         self.cache = cache
         self.secret_scanner = secret_scanner
         self.cache_ttl = cache_ttl
-        self.code_searcher = CodeSearcher(github_client, cache, secret_scanner, cache_ttl)
+        self.code_searcher = CodeSearcher(github_client, cache, cache_ttl)
 
     def find_simpler(
         self,
@@ -171,7 +171,7 @@ async def find_simpler_alternative_tool(
     cache,
     secret_scanner,
     cache_ttl: int
-) -> List[Dict[str, Any]]:
+) -> Dict:
     """
     MCP tool: Find simpler alternatives
 
@@ -185,10 +185,13 @@ async def find_simpler_alternative_tool(
     max_results = arguments.get("max_results", 5)
 
     if not feature:
-        return [{
-            "type": "text",
-            "text": "Error: Please provide a feature to find simpler alternatives for"
-        }]
+        return {
+            "content": [{
+                "type": "text",
+                "text": "Error: Please provide a feature to find simpler alternatives for"
+            }],
+            "isError": True
+        }
 
     finder = SimplerAlternativeFinder(github_client, cache, secret_scanner, cache_ttl)
     result = finder.find_simpler(feature, language, max_results)
@@ -235,4 +238,9 @@ async def find_simpler_alternative_tool(
     if not result.get('alternatives'):
         output.append("No simpler alternatives found. Try broadening your search.\n")
 
-    return [{"type": "text", "text": "".join(output)}]
+    return {
+        "content": [{
+            "type": "text",
+            "text": "".join(output)
+        }]
+    }

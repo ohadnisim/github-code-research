@@ -20,7 +20,7 @@ class ImplementationGuideGenerator:
         self.cache = cache
         self.secret_scanner = secret_scanner
         self.cache_ttl = cache_ttl
-        self.code_searcher = CodeSearcher(github_client, cache, secret_scanner, cache_ttl)
+        self.code_searcher = CodeSearcher(github_client, cache, cache_ttl)
 
     def generate_guide(
         self,
@@ -250,7 +250,7 @@ async def get_implementation_guide_tool(
     cache,
     secret_scanner,
     cache_ttl: int
-) -> List[Dict[str, Any]]:
+) -> Dict:
     """
     MCP tool: Get implementation guide
 
@@ -266,10 +266,13 @@ async def get_implementation_guide_tool(
     max_examples = arguments.get("max_examples", 3)
 
     if not feature:
-        return [{
-            "type": "text",
-            "text": "Error: Please provide a feature to get implementation guide for"
-        }]
+        return {
+            "content": [{
+                "type": "text",
+                "text": "Error: Please provide a feature to get implementation guide for"
+            }],
+            "isError": True
+        }
 
     generator = ImplementationGuideGenerator(github_client, cache, secret_scanner, cache_ttl)
     guide = generator.generate_guide(feature, language, framework, max_examples)
@@ -331,4 +334,9 @@ async def get_implementation_guide_tool(
                 output.append("\n... (truncated)")
             output.append("\n```\n\n")
 
-    return [{"type": "text", "text": "".join(output)}]
+    return {
+        "content": [{
+            "type": "text",
+            "text": "".join(output)
+        }]
+    }

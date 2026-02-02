@@ -160,7 +160,7 @@ async def find_compatible_patterns_tool(
     cache,
     secret_scanner,
     cache_ttl: int
-) -> List[Dict[str, Any]]:
+) -> Dict:
     """
     MCP tool: Find patterns that work together
 
@@ -176,10 +176,13 @@ async def find_compatible_patterns_tool(
     max_results = arguments.get("max_results", 5)
 
     if not patterns or len(patterns) < 2:
-        return [{
-            "type": "text",
-            "text": "Error: Please provide at least 2 patterns to find together"
-        }]
+        return {
+            "content": [{
+                "type": "text",
+                "text": "Error: Please provide at least 2 patterns to find together"
+            }],
+            "isError": True
+        }
 
     finder = CompatiblePatternFinder(github_client, cache, secret_scanner, cache_ttl)
     result = finder.find_compatible(patterns, language, min_stars, max_results)
@@ -210,4 +213,9 @@ async def find_compatible_patterns_tool(
 
         output.append("-" * 60 + "\n")
 
-    return [{"type": "text", "text": "".join(output)}]
+    return {
+        "content": [{
+            "type": "text",
+            "text": "".join(output)
+        }]
+    }

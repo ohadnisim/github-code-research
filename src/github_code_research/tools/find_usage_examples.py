@@ -20,7 +20,7 @@ class UsageExampleFinder:
         self.cache = cache
         self.secret_scanner = secret_scanner
         self.cache_ttl = cache_ttl
-        self.code_searcher = CodeSearcher(github_client, cache, secret_scanner, cache_ttl)
+        self.code_searcher = CodeSearcher(github_client, cache, cache_ttl)
 
     def find_usage(
         self,
@@ -200,7 +200,7 @@ async def find_usage_examples_tool(
     cache,
     secret_scanner,
     cache_ttl: int
-) -> List[Dict[str, Any]]:
+) -> Dict:
     """
     MCP tool: Find usage examples
 
@@ -216,10 +216,13 @@ async def find_usage_examples_tool(
     max_results = arguments.get("max_results", 5)
 
     if not function_or_library:
-        return [{
-            "type": "text",
-            "text": "Error: Please provide a function or library to find usage examples for"
-        }]
+        return {
+            "content": [{
+                "type": "text",
+                "text": "Error: Please provide a function or library to find usage examples for"
+            }],
+            "isError": True
+        }
 
     finder = UsageExampleFinder(github_client, cache, secret_scanner, cache_ttl)
     result = finder.find_usage(function_or_library, language, context, max_results)
@@ -268,4 +271,9 @@ async def find_usage_examples_tool(
         output.append("  - Using a more specific search term\n")
         output.append("  - Adding context to narrow the search\n")
 
-    return [{"type": "text", "text": "".join(output)}]
+    return {
+        "content": [{
+            "type": "text",
+            "text": "".join(output)
+        }]
+    }
