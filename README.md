@@ -47,7 +47,7 @@ Instantly verify if repositories are safe to use with automatic license detectio
 
 - Python 3.10 or higher
 - GitHub Personal Access Token ([Get one here](https://github.com/settings/tokens))
-- Claude Desktop or Claude Code CLI
+- MCP-compatible AI assistant (Claude Desktop, etc.)
 
 ### Installation
 
@@ -65,27 +65,9 @@ export GITHUB_TOKEN=ghp_your_token_here
 
 ### Configuration
 
-#### For Claude Desktop
+Add to your MCP client configuration file.
 
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "github-code-research": {
-      "command": "/path/to/venv/bin/python3",
-      "args": ["-m", "github_code_research"],
-      "env": {
-        "GITHUB_TOKEN": "ghp_your_token_here"
-      }
-    }
-  }
-}
-```
-
-#### For Claude Code CLI
-
-Create `~/.mcp.json`:
+**For Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
 ```json
 {
