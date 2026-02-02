@@ -1,0 +1,10 @@
+{
+  "github_token": "ghp_your_token_here",
+  "max_search_results": 10,
+  "cache_dir": ".cache",
+  "cache_ttl_search": 3600,
+  "cache_ttl_repo_map": 86400,
+  "cache_ttl_license": 604800,
+  "supported_languages": ["python", "javascript", "typescript", "go"],
+  "log_level": "INFO"
+}

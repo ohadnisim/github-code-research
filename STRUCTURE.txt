@@ -1,0 +1,97 @@
+GitHub Code Research MCP Server - Project Structure
+====================================================
+
+github-code-research/
+├── README.md                          # Main documentation
+├── INSTALLATION.md                    # Installation guide
+├── USAGE_EXAMPLES.md                  # Usage examples
+├── PROJECT_SUMMARY.md                 # Implementation summary
+├── LICENSE                            # MIT License
+├── pyproject.toml                     # Package configuration
+├── quickstart.sh                      # Quick start script
+├── .gitignore                         # Git ignore rules
+├── .env.example                       # Environment template
+├── config.example.json                # Config template
+│
+├── src/
+│   └── github_code_research/
+│       ├── __init__.py               # Package init
+│       ├── __main__.py               # CLI entry point
+│       ├── server.py                 # Main MCP server
+│       │
+│       ├── config/
+│       │   ├── __init__.py
+│       │   └── settings.py          # Configuration system
+│       │
+│       ├── github/
+│       │   ├── __init__.py
+│       │   ├── auth.py              # Token validation
+│       │   ├── client.py            # GitHub API client
+│       │   └── rate_limiter.py      # Rate limit management
+│       │
+│       ├── tools/
+│       │   ├── __init__.py
+│       │   ├── search_patterns.py   # Code search tool
+│       │   ├── repo_map.py          # Repository mapping
+│       │   ├── extract_function.py  # Function extraction
+│       │   └── check_license.py     # License checking
+│       │
+│       ├── parsers/
+│       │   ├── __init__.py
+│       │   ├── base.py              # Parser interface
+│       │   ├── factory.py           # Parser factory
+│       │   ├── python_parser.py     # Python parser
+│       │   ├── javascript_parser.py # JavaScript parser
+│       │   ├── typescript_parser.py # TypeScript parser
+│       │   └── pagerank.py          # PageRank algorithm
+│       │
+│       ├── security/
+│       │   ├── __init__.py
+│       │   └── secret_scanner.py    # Secret detection
+│       │
+│       └── utils/
+│           ├── __init__.py
+│           ├── cache.py             # File-based cache
+│           ├── errors.py            # Custom exceptions
+│           └── logger.py            # Logging setup
+│
+└── tests/
+    ├── __init__.py
+    ├── conftest.py                  # Pytest fixtures
+    ├── test_github_client.py        # Client tests
+    ├── test_parsers/
+    │   ├── __init__.py
+    │   └── test_tree_sitter.py     # Parser tests
+    └── test_tools/
+        ├── __init__.py
+        └── test_search_patterns.py  # Tool tests
+
+Statistics:
+-----------
+Total Files: 40
+Python Files: 34
+Test Files: 5
+Documentation: 7 files
+Lines of Code: ~3,500+
+
+Modules:
+--------
+1. Configuration (settings, validation)
+2. GitHub Client (API, auth, rate limiting)
+3. Tools (4 MCP tools)
+4. Parsers (3 languages + PageRank)
+5. Security (secret scanning)
+6. Utilities (cache, errors, logging)
+7. Server (MCP integration)
+
+Features:
+---------
+✓ Code pattern search
+✓ Repository mapping with PageRank
+✓ Function extraction with AST
+✓ License detection and safety
+✓ Secret scanning and redaction
+✓ Rate limit management
+✓ Multi-layer caching
+✓ Tree-sitter AST parsing
+✓ Claude Desktop integration
