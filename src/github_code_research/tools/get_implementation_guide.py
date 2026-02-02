@@ -77,9 +77,15 @@ class ImplementationGuideGenerator:
             logger.error(f"Error generating implementation guide: {e}")
             return {
                 "feature": feature,
+                "language": language,
+                "framework": framework,
+                "overview": f"Error generating guide: {str(e)}",
                 "error": str(e),
+                "dependencies": [],
                 "steps": [],
-                "examples": []
+                "patterns": [],
+                "examples": [],
+                "tips": []
             }
 
     def _analyze_examples(
@@ -324,7 +330,7 @@ async def get_implementation_guide_tool(
         output.append("## Working Examples\n\n")
         for i, example in enumerate(guide['examples'], 1):
             output.append(f"### Example {i}: {example['repo']}\n")
-            output.append(f"File: {example['file']}\n")
+            output.append(f"File: {example['path']}\n")
             output.append(f"URL: {example['url']}\n")
             output.append(f"Stars: {example.get('stars', 0)}\n\n")
             output.append("```\n")

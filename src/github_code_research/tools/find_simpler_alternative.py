@@ -69,7 +69,7 @@ class SimplerAlternativeFinder:
             seen = set()
             unique_results = []
             for result in all_results:
-                key = f"{result['repo']}:{result['file']}"
+                key = f"{result['repo']}:{result['path']}"
                 if key not in seen:
                     seen.add(key)
                     unique_results.append(result)
@@ -100,6 +100,8 @@ class SimplerAlternativeFinder:
             logger.error(f"Error finding simpler alternatives: {e}")
             return {
                 "feature": feature,
+                "language": language,
+                "total_found": 0,
                 "error": str(e),
                 "alternatives": []
             }

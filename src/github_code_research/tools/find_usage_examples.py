@@ -74,7 +74,7 @@ class UsageExampleFinder:
             seen = set()
             unique_examples = []
             for example in all_examples:
-                key = f"{example['repo']}:{example['file']}"
+                key = f"{example['repo']}:{example['path']}"
                 if key not in seen:
                     seen.add(key)
                     unique_examples.append(example)
@@ -107,6 +107,9 @@ class UsageExampleFinder:
             logger.error(f"Error finding usage examples: {e}")
             return {
                 "function_or_library": function_or_library,
+                "language": language,
+                "context": context,
+                "total_found": 0,
                 "error": str(e),
                 "examples": []
             }
