@@ -212,7 +212,7 @@ async def find_simpler_alternative_tool(
     for i, alt in enumerate(result.get('alternatives', []), 1):
         output.append(f"## Alternative {i}: {alt['repo']}\n")
         output.append(f"**Simplicity Score: {alt['simplicity_score']:.0f}/100**\n")
-        output.append(f"File: {alt['file']}\n")
+        output.append(f"File: {alt['path']}\n")
         output.append(f"URL: {alt['url']}\n")
         output.append(f"Stars: {alt.get('stars', 0)}\n\n")
 
@@ -225,7 +225,7 @@ async def find_simpler_alternative_tool(
         if "simple" in content.lower() or "minimal" in content.lower():
             output.append(f"  - Described as simple/minimal\n")
 
-        if "example" in alt['file'].lower():
+        if "example" in alt['path'].lower():
             output.append(f"  - From examples/tutorials\n")
 
         output.append("\n**Code Preview:**\n")
